@@ -1,0 +1,19 @@
+<Extension>
+
+	<name>oauth-comment-adapter</name>
+	<version>0.1</version>
+	<title>评论推送</title>
+ 
+	<class>org.opencomb.oauthcommentadapter.OAuthCommentAdapter</class>
+	<package folder="/class" namespace="org.opencomb.oauthcommentadapter" />
+	
+	<template folder="/template" />
+	
+	<publicFolder folder="/public" />
+	
+	
+	<require type="extension" item='coresystem'><![CDATA[ >=0.1 ]]></require>
+	<require type="extension" item='oauth'><![CDATA[ >=0.1 ]]></require>
+	<require type="extension" item='oc-wonei-bridge'><![CDATA[ >=0.1 ]]></require>
+	
+</Extension>

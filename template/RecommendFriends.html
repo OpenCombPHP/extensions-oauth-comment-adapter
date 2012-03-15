@@ -1,0 +1,24 @@
+<div class="sidebox">
+	<h2 class="title">
+		<span id="sideblock_mutuality_title"> <a href="javascript:;" onclick="showhidediv(&quot;sideblock_mutuality&quot;);" class="side_block">[-]</a></span> 你可能认识
+		<a href="cp.php?ac=friend&op=find" title="查看更多推荐玩家" class="r_option">更多</a>
+	</h2>
+	<div class="panel-content" id="sideblock_mutuality" >
+		<if '$arrUserModels'>
+		<ul class="avatar_list">
+			<foreach for='$arrUserModels' item='aUserModel'>
+			<li>
+					<a class="avatar48" href="space.php?uid={=$aUserModel['uid']} " title="{=$aUserModel['username']}"><img	src="{=$aUserModel['uid']}"	alt="{=$aUserModel['username']}" title="{=$aUserModel['username']}" /></a>
+				<p >
+					<a href="cp.php?ac=poke&op=send&uid={=$aUserModel['uid']}" id="a_p_s_{=$aUserModel['uid']}" title="骚扰一下{=$aUserModel['username']}" onclick="ajaxmenu(event, this.id, 99999, '', -1)">{=$aUserModel['username']}</a>
+				</p>
+			</li>
+			</foreach>
+		</ul>
+		</if>
+		<div class="clear"></div>
+		<div class="tip_text_r">
+			<a href="cp.php?ac=invite">邀请朋友加入</a>
+		</div>
+	</div>
+</div>
