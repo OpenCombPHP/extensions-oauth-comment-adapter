@@ -13,11 +13,8 @@ use org\jecat\framework\auth\IdManager;
 use org\jecat\framework\message\Message;
 use org\opencomb\coresystem\mvc\controller\Controller ;
 
-class PullComment extends Controller
+class PushComment extends Controller
 {
-//     private $minNextTime = 4;
-//     private $maxNextTime = 20;
-    
 	public function createBeanConfig()
 	{
 	    $aOrm = array(
@@ -76,9 +73,6 @@ class PullComment extends Controller
 	}
 	public function process()
 	{
-		
-		return;
-		
 	    if(!$aId =IdManager::singleton()->currentId())
 	    {
 	    	$this->messageQueue ()->create ( Message::error, "请先登录" );

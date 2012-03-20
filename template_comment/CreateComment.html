@@ -1,0 +1,38 @@
+<msgqueue />
+<if '$bAllowSubmit'>
+	<form class='createCommentForm' method="post">
+		<div class="comment_textarea">
+			<widget id="comment_content" />
+			<input type='hidden' name='tid' value='{=$theParams["tid"]}' />
+			<input type='hidden' name='type' value='{=$theParams["type"]}' />
+			<input type='hidden' name='pid' value='{=$theParams["pid"]}' />
+		</div>
+		<div class='comment_input'>
+			<span>同步发送到: </span>
+			<if '!$weiboCheckable && !$qqCheckable && !$wyCheckable && !$sohuCheckable && !$renrenCheckable'>
+				评论只在窝内可见,<a href='?c=org.opencomb.oauth.controlPanel.OAuthState'>检查绑定状态</a>
+			</if>
+			<if '$weiboCheckable' >
+				<label>新浪微博<input name='sendto[]' type='checkbox' value='weibo.com' checked/></label>
+			</if>
+			<if '$qqCheckable' >
+				<label>腾讯微博<input name='sendto[]' type='checkbox' value='t.qq.com' checked/></label>
+			</if>
+			<if '$wyCheckable' >
+				<label>网易微博<input name='sendto[]' type='checkbox' value='163.com' checked/></label>
+			</if>
+			<if '$sohuCheckable' >
+				<label>搜狐微博<input name='sendto[]' type='checkbox' value='sohu.com' checked/></label>
+			</if>
+			<if '$renrenCheckable' >
+				<label>人人状态<input name='sendto[]' type='checkbox' value='renren.com' checked/></label>
+			</if>
+			
+			<input type='submit' value="发布" class="comment_submit" />
+		</div>
+	</form>
+<else />
+	<div class='cannot_user_createcomment'>
+		<a href='?c=login'>登录</a>后进行评论
+	</div>
+</if>

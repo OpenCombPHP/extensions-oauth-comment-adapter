@@ -13,5 +13,7 @@ class OAuthCommentAdapter extends Extension
 	{
 		//修改liststate中链接
 		AOP::singleton()->register('org\\opencomb\\oauthcommentadapter\\aspect\\CommentListAspect') ;
+		
+		AOP::singleton()->register('org\\opencomb\\oauthcommentadapter\\aspect\\CreateCommentAspect') ;
 	}
 }
