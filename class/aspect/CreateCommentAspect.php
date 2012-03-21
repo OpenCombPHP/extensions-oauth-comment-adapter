@@ -138,9 +138,25 @@ class CreateCommentAspect
 				}else if($sSendTo == 't.qq.com'){
 					$arrOtherParams = array('reid'=> $arrTid[$sSendTo] , 'content'=> $this->modelComment['content']);
 				}else if($sSendTo == 'renren.com'){
+					//作者在service网站上的用户信息
+					$arrRenrenUserBean = array(
+							'class'=>'model',
+							'orm' => array(
+									'table' => 'oauth:user' ,
+									'keys'=>array('uid','suid'),
+							) ,
+					);
+					$aRenrenUserModel = BeanFactory::singleton()->createBean($arrRenrenUserBean,'oauth');
+					$aRenrenUserModel->load(array( $aStateModel['uid'] ,'renren.com', '1'),array('uid'  , 'service' , 'valid'));
+					
+					if(!$aRenrenUserModel){
+						continue;
+					}
+// 					$aRenrenUserModel->printStruct();
+					
 					$arrOtherParams = array(
 							'status_id'=> $arrTid[$sSendTo] , 
-// 							'owner_id'=> $arrTid[$sSendTo] , 
+							'owner_id'=> $aRenrenUserModel['suid'] ,
 							'content'=> $this->modelComment['content'],
 							);
 				}
@@ -150,7 +166,7 @@ class CreateCommentAspect
 				//同步到目标网站
 				try{
 					$aAdapter = \org\opencomb\oauth\adapter\AdapterManager::singleton()->createApiAdapter($sSendTo) ;
-					$aRs = $aAdapter->pushCommentMulti($arrOUserHasOAuthModel[$sSendTo], $this->modelComment , $arrOtherParams);
+					$aRs = @$aAdapter->pushCommentMulti($arrOUserHasOAuthModel[$sSendTo], $this->modelComment , $arrOtherParams);
 				}catch(\org\opencomb\oauth\adapter\AuthAdapterException $e){
 					var_dump($e->messageSentence());
 // 					$this->createMessage(Message::error,$e->messageSentence(),$e->messageArgvs()) ;
@@ -160,10 +176,11 @@ class CreateCommentAspect
 				
 				$OAuthCommon = new \net\daichen\oauth\OAuthCommon("",  "");
 				$aRsT = $OAuthCommon -> multi_exec();
-				var_dump(json_decode($aRsT[$sSendTo] , true));
-// 				exit;
-				
-				$arrReport = json_decode($aRsT[$sSendTo] , true);
+				var_dump($aRsT);
+				if($sSendTo !== 'renren.com'){
+					var_dump(json_decode($aRsT[$sSendTo] , true));
+					$arrReport = json_decode($aRsT[$sSendTo] , true);
+				}
 				
 				if($sSendTo == 'weibo.com'){
 					$sReportId = $arrReport['id'];
