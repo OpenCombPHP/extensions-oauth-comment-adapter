@@ -58,7 +58,7 @@ class CreateCommentAspect
 			$arrOUserHasOAuthModel = array();
 			foreach($aOUserModel->childIterator() as $aOUser){
 				$arrOUserHasOAuth[] = $aOUser['service'];
-				$arrOUserHasOAuthModel[$aOUser['service']] = $aOUser;
+				$arrOUserHasOAuthModel[$aOUser['service']] = array('token'=>$aOUser->token, 'token_secret'=>$aOUser->token_secret);
 			}
 			
 			//获得此微博在对应网站上的id
@@ -145,10 +145,12 @@ class CreateCommentAspect
 							);
 				}
 				
+// 				var_dump($arrOtherParams);
+				
 				//同步到目标网站
 				try{
 					$aAdapter = \org\opencomb\oauth\adapter\AdapterManager::singleton()->createApiAdapter($sSendTo) ;
-					$aRs = @$aAdapter->pushCommentMulti($arrOUserHasOAuthModel[$sSendTo], $this->modelComment , $arrOtherParams);
+					$aRs = $aAdapter->pushCommentMulti($arrOUserHasOAuthModel[$sSendTo], $this->modelComment , $arrOtherParams);
 				}catch(\org\opencomb\oauth\adapter\AuthAdapterException $e){
 					var_dump($e->messageSentence());
 // 					$this->createMessage(Message::error,$e->messageSentence(),$e->messageArgvs()) ;
@@ -158,7 +160,6 @@ class CreateCommentAspect
 				
 				$OAuthCommon = new \net\daichen\oauth\OAuthCommon("",  "");
 				$aRsT = $OAuthCommon -> multi_exec();
-				
 				var_dump(json_decode($aRsT[$sSendTo] , true));
 // 				exit;
 				
