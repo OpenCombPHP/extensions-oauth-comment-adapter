@@ -4,18 +4,19 @@ namespace org\opencomb\oauthcommentadapter\pull ;
 use org\opencomb\oauth\adapter\AdapterManager;
 use net\daichen\oauth\OAuthCommon;
 
-class Puller_sohu_com extends AbstractPuller{
+class Puller_renren_com extends AbstractPuller{
 	const NUM_PER_PAGE = 10 ;
 	public function commentCount(){
 		if( $this->iComments_count < 0 ){
 			$arr = $this->pull( array() , 'createPullCommentCount' ) ;
 			
-			$this->iComments_count = (int)$arr['comments_count'] ;
+			$this->iComments_count = (int)$arr['comment_count'] ;
 		}
 		return $this->iComments_count ;
 	}
 	
 	public function pullOlder($iFrom,$iCount){
+		var_dump($iFrom);
 		$arrParams = array(
 			'count' => $iCount ,
 		);
