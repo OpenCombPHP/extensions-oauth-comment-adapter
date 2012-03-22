@@ -163,12 +163,11 @@ class CreateCommentAspect
 				
 // 				var_dump($arrOtherParams);
 				
-				//同步到目标网站
-				try{
+			try{
 					$aAdapter = \org\opencomb\oauth\adapter\AdapterManager::singleton()->createApiAdapter($sSendTo) ;
 					$aRs = @$aAdapter->pushCommentMulti($arrOUserHasOAuthModel[$sSendTo], $this->modelComment , $arrOtherParams);
 				}catch(\org\opencomb\oauth\adapter\AuthAdapterException $e){
-					var_dump($e->messageSentence());
+// 					var_dump($e->messageSentence());
 // 					$this->createMessage(Message::error,$e->messageSentence(),$e->messageArgvs()) ;
 					$this->messageQueue()->display() ;
 					continue ;
@@ -176,9 +175,9 @@ class CreateCommentAspect
 				
 				$OAuthCommon = new \net\daichen\oauth\OAuthCommon("",  "");
 				$aRsT = $OAuthCommon -> multi_exec();
-				var_dump($aRsT);
+// 				var_dump($aRsT);
 				if($sSendTo !== 'renren.com'){
-					var_dump(json_decode($aRsT[$sSendTo] , true));
+// 					var_dump(json_decode($aRsT[$sSendTo] , true));
 					$arrReport = json_decode($aRsT[$sSendTo] , true);
 				}
 				
@@ -199,10 +198,31 @@ class CreateCommentAspect
 					$sReportUserId = $arrOUserHasOAuthModel[$sSendTo]['suid'];   //腾讯上帐号和name通用
 					$sReportUsername = $arrOUserHasOAuthModel[$sSendTo]['suid']; //腾讯上帐号和name通用
 				}else if($sSendTo == 'renren.com'){
-					exit;
-					$sReportId = $arrReport['data']['id'];
-					$sReportUserId = $arrOUserHasOAuthModel[$sSendTo]['suid'];
-					$sReportUsername = $arrOUserHasOAuthModel[$sSendTo]['suid'];
+					try{
+						$aAdapter = \org\opencomb\oauth\adapter\AdapterManager::singleton()->createApiAdapter($sSendTo) ;
+						$aRs = @$aAdapter->createPullCommentMulti(
+								$arrOUserHasOAuthModel[$sSendTo], 
+								array('sid'=>$arrTid[$sSendTo]) ,
+								array(),
+								array( 'suid'=>$aRenrenUserModel['suid'] )
+							);
+					}catch(\org\opencomb\oauth\adapter\AuthAdapterException $e){
+						$this->messageQueue()->display() ;
+						continue ;
+					}
+					
+					$OAuthCommon = new \net\daichen\oauth\OAuthCommon("",  "");
+					$aRsT = $OAuthCommon -> multi_exec();
+					$arrReport = json_decode($aRsT[$sSendTo] , true);
+					
+					foreach($arrReport as $arrOneReport){
+						if($arrOneReport['text'] === $arrOtherParams['content']){
+							$sReportId = $arrOneReport['comment_id'];
+							$sReportUserId = $arrOneReport['uid'];
+							$sReportUsername = $arrOneReport['name'];
+							break;
+						}
+					}
 				}
 				
 				//保存到自己的数据库
