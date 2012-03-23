@@ -53,10 +53,10 @@ class CreateCommentAspect
 			);
 			$aOUserModel = BeanFactory::singleton()->createBean($arrOUserBean,'oauth');
 			$aOUserModel->load(array( $aId->userId() , '1'),array('uid' , 'valid'));
-			
+			$aOUserModel->printStruct();
 			$arrOUserHasOAuth = array();
 			$arrOUserHasOAuthModel = array();
-			foreach($aOUserModel->childIterator() as $aOUser){
+			foreach($aOUserModel as $aOUser){
 				$arrOUserHasOAuth[] = $aOUser['service'];
 				$arrOUserHasOAuthModel[$aOUser['service']] = array('token'=>$aOUser->token, 'token_secret'=>$aOUser->token_secret);
 			}

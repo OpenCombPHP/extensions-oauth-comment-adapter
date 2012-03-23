@@ -143,9 +143,9 @@ class PullComment extends Controller
 				$aComment = comment\CommentFactory::singleton()->create($ostate['service']) ;
 				
 				$iCount = $aPuller->commentCount() ;
-				echo '调试信息 : ';
-				echo __METHOD__,' line:',__LINE__,' ';
-				echo '共有评论',$iCount,'条<br />';
+// 				echo '调试信息 : ';
+// 				echo __METHOD__,' line:',__LINE__,' ';
+// 				echo '共有评论',$iCount,'条<br />';
 				
 				$iCount = 20 ;
 				
@@ -185,8 +185,8 @@ class PullComment extends Controller
 				
 				$aIter = $this->modelOcomment->childIterator() ;
 				$aIter->last();
-				if($aIter->valid()){
-					$nextOlderFrom = $aIter->current()->data('nextOlderFrom');
+				if($aIter->valid() && $ss = $aIter->current()){
+					$nextOlderFrom = $ss->data('nextOlderFrom');
 				
 					$arrList = $aPuller->pullOlder($nextOlderFrom,$iCount);
 					$nextfrom = $aPuller->getNextOlderFrom($nextOlderFrom);
