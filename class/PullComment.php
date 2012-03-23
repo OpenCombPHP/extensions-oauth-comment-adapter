@@ -307,6 +307,7 @@ class PullComment extends Controller
 			$aInsert->setData('cid',$cid);
 			$aInsert->setData('tcid',$aComment->tcid() );
 			$aInsert->setData('tuid',$aComment->tuid() );
+			$aInsert->setData('tusername',$aComment->username() );
 			$aInsert->setData('service',$aComment->service() );
 			$aInsert->setData('nextOlderFrom',$nextfrom );
 			DB::singleton()->execute($aInsert) ;
