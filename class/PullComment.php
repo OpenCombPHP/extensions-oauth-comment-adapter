@@ -143,6 +143,8 @@ class PullComment extends Controller
 				$aComment = comment\CommentFactory::singleton()->create($ostate['service']) ;
 				
 				$iCount = $aPuller->commentCount() ;
+				echo '调试信息 : ';
+				echo __METHOD__,' line:',__LINE__,' ';
 				echo '共有评论',$iCount,'条<br />';
 				
 				$iCount = 20 ;

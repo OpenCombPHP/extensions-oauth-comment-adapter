@@ -5,7 +5,6 @@ use org\opencomb\oauth\adapter\AdapterManager;
 use net\daichen\oauth\OAuthCommon;
 
 class Puller_renren_com extends AbstractPuller{
-	const NUM_PER_PAGE = 10 ;
 	public function commentCount(){
 		if( $this->iComments_count < 0 ){
 			$arr = $this->pull( array() , 'createPullCommentCount' ) ;
@@ -16,7 +15,6 @@ class Puller_renren_com extends AbstractPuller{
 	}
 	
 	public function pullOlder($iFrom,$iCount){
-		var_dump($iFrom);
 		$arrParams = array(
 			'count' => $iCount ,
 		);
