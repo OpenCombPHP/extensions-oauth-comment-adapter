@@ -93,21 +93,19 @@ class PullComment extends Controller
 	}
 	public function process()
 	{
-		
-		if(!$aId =IdManager::singleton()->currentId())
-		{
-			$this->messageQueue ()->create ( Message::error, "请先登录" );
-			return;
-		}
 		if(!$this->params->has('tid')){
 			$this->messageQueue ()->create ( Message::error, "缺少信息,无法找到评论" );
 			return;
 		}
-		
+// 		var_dump($this->params->get('tid'));
 		$this->state->load($this->params->get('tid'));
 
 		$aSetting = Application::singleton()->extensions()->extension('comment')->setting() ;
 		$nWaitTime = (int)$aSetting->item('/commentFromOtherWeb','commentTime',300) ;
+		
+// 				$this->state->printStruct();
+// 				$this->state->child('ostate')->printStruct();
+		
 		//有几个网站存在这个state就拉几个网站的评论
 		foreach($this->state->child('ostate')->childIterator() as $ostate){
 			//需要新的评论,结果却没有到该拉评论的时间限制
@@ -222,6 +220,9 @@ class PullComment extends Controller
 		}
 		
 		$aId = IdManager::singleton()->currentId() ;
+		if(!$aId){
+			return;
+		}
 		$auserModelInfo = clone $this->checkUid->prototype()->criteria()->where();
 		$this->checkUid->clearData();
 		$auserModelInfo->eq('service',$service);

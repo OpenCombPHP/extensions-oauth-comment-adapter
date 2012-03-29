@@ -1,9 +1,6 @@
 <?php
 namespace org\opencomb\oauthcommentadapter\aspect ;
 
-use org\jecat\framework\message\Message;
-use org\jecat\framework\bean\BeanFactory;
-use org\jecat\framework\mvc\model\db\Model;
 use org\jecat\framework\lang\aop\jointpoint\JointPointMethodDefine;
 
 class CommentListAspect
@@ -31,4 +28,3 @@ class CommentListAspect
 		return $arrConfig;
 	}
 }
-?>
