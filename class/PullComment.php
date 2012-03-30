@@ -102,6 +102,12 @@ class PullComment extends Controller
 		$nWaitTime = (int)$aSetting->item('/commentFromOtherWeb','commentTime',300) ;
 		//有几个网站存在这个state就拉几个网站的评论
 		foreach($this->state->child('ostate')->childIterator() as $ostate){
+			
+			//豆瓣不支持评论接口
+			if($ostate['service'] === 'douban.com'){
+				continue;
+			}
+			
 			//需要新的评论,结果却没有到该拉评论的时间限制
 			if( !$this->params->has('oldcommentes') && ($ostate['pullcommenttime'] + $nWaitTime) > time() )
 			{
@@ -135,7 +141,7 @@ class PullComment extends Controller
 				
 				$aComment = comment\CommentFactory::singleton()->create($ostate['service']) ;
 				
-				$iCount = $aPuller->commentCount() ;
+// 				$iCount = $aPuller->commentCount() ;
 // 				echo '调试信息 : ';
 // 				echo __METHOD__,' line:',__LINE__,' ';
 // 				echo '共有评论',$iCount,'条<br />';
@@ -147,7 +153,16 @@ class PullComment extends Controller
 				$arrList = $aPuller->pullOlder( $olderFrom ,$iCount);
 				$nextfrom = $aPuller->getNextOlderFrom($olderFrom);
 				
+// 				if($ostate['service'] == 'renren.com'){
+// 					echo '<pre>';
+// 					var_dump($arrList);
+// 					echo "</pre>";
+// 				}
 				foreach($arrList as $arrComment){
+					if($ostate['service'] == 't.qq.com'){
+						$arrComment['user']['id'] = $arrComment['name'];
+					}
+					
 					if(is_array($arrComment) ){
 						$aComment->setArray($arrComment);
 						$this->saveCommentToDb($aComment,$nextfrom,$ostate);
@@ -188,6 +203,9 @@ class PullComment extends Controller
 							//腾讯返回的用户信息特殊
 							if($ostate['service'] == 't.qq.com'){
 								$arrComment['user']['id'] = $arrComment['name'];
+							}
+							if($ostate['service'] == 'renren.com'){
+// 								var_dump($arrComment);
 							}
 							$aComment->setArray($arrComment);
 							$this->saveCommentToDb($aComment,$nextfrom,$ostate);

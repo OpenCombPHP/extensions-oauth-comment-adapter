@@ -17,7 +17,11 @@ class Comment_renren_com extends AbstractComment{
 	}
 	
 	public function tcid(){
-		return $this->arr['comment_id'] ;
+		if(isset($this->arr['comment_id'])){
+			return $this->arr['comment_id'] ;
+		}else{
+			return 0;
+		}
 	}
 	
 	public function tuid(){

@@ -35,10 +35,12 @@ abstract class AbstractPuller implements IPuller{
 		$aRs = $aAdapter->$sFunName($this->aUser, $this->aOstate,$arrParams , $this->aAuther);
 		$OAuthCommon = new OAuthCommon("",  "");
 		$aRsT = $OAuthCommon -> multi_exec();
+		$aRsT[$sService] = mb_convert_encoding($aRsT[$sService], 'HTML-ENTITIES', 'utf8');
 		$arr = json_decode($aRsT[$sService],true);
 		
 		if( !is_array($arr)){
-			var_dump($aRsT);
+			var_dump($aRsT[$sService]);
+// 			var_dump($aRsT);
 		}
 		
 		return $arr ;
