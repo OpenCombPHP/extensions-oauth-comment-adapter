@@ -152,7 +152,7 @@ class PullComment extends Controller
 						$aComment->setArray($arrComment);
 						$this->saveCommentToDb($aComment,$nextfrom,$ostate);
 					}else{
-						echo '1:';var_dump($arrComment);
+						echo '>>>>>>1:';var_dump($arrComment);
 					}
 				}
 				
@@ -185,10 +185,14 @@ class PullComment extends Controller
 					$nextfrom = $aPuller->getNextOlderFrom($nextOlderFrom);
 					foreach($arrList as $arrComment){
 						if(is_array($arrComment) ){
+							//腾讯返回的用户信息特殊
+							if($ostate['service'] == 't.qq.com'){
+								$arrComment['user']['id'] = $arrComment['name'];
+							}
 							$aComment->setArray($arrComment);
 							$this->saveCommentToDb($aComment,$nextfrom,$ostate);
 						}else{
-							echo '2:';var_dump($arrComment);
+							echo '>>>>>>>2:';var_dump($arrComment);
 						}
 					}
 				}
@@ -213,11 +217,10 @@ class PullComment extends Controller
 		{
 			return false;
 		}
-		
 		$aId = IdManager::singleton()->currentId() ;
-		if(!$aId){
-			return;
-		}
+// 		if(!$aId){
+// 			return;
+// 		}
 		$auserModelInfo = clone $this->checkUid->prototype()->criteria()->where();
 		$this->checkUid->clearData();
 		$auserModelInfo->eq('service',$service);
@@ -236,11 +239,9 @@ class PullComment extends Controller
 		
 			$this->user->setData("info.nickname",$aUserInfo['username']);
 			$this->user->setData("info.avatar",$aUserInfo['avatar']);
-		
-			$this->user->child("friends")->createChild()
-			->setData("from",$aId->userId());
-		
-			
+			if($aId){
+				$this->user->child("friends")->createChild()->setData("from",$aId->userId());
+			}
 			$this->user->save() ;
 			
 			$uid = $this->user->uid;
