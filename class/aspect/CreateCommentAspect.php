@@ -236,6 +236,7 @@ class CreateCommentAspect
 				{
 					continue;
 				}
+				$aOCommentModel->printStruct();
 			}
 		}else{
 			if(!IdManager::singleton()->currentId()){
