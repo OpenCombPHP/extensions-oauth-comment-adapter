@@ -27,4 +27,8 @@ class Comment_renren_com extends AbstractComment{
 	public function tuid(){
 		return $this->arr['uid'];
 	}
+	
+	public function verified(){
+		return $this->arr['verified'] ;
+	}
 }

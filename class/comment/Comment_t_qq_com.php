@@ -26,4 +26,8 @@ class Comment_t_qq_com extends AbstractComment{
 	public function create_time(){
 		return $this->arr['timestamp'] ;
 	}
+	
+	public function verified(){
+		return $this->arr['isvip'] ;
+	}
 }

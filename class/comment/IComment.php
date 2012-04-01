@@ -50,4 +50,10 @@ interface IComment{
 	 * 原网站名字
 	 */
 	public function service() ;
+	
+	/**
+	 * 在原网站是否通过了认证
+	 * @return boolean
+	 */
+	public function verified() ;
 }

@@ -15,4 +15,8 @@ class Comment_weibo_com extends AbstractComment{
 		
 		return strtotime($sTime);
 	}
+	
+	public function verified(){
+		return $this->arr['user']['verified'] ;
+	}
 }

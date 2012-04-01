@@ -254,6 +254,7 @@ class PullComment extends Controller
 		
 			$this->user->setData('auser.service',$service);
 			$this->user->setData('auser.suid',$aUserInfo['username']);
+			$this->user->setData('auser.verified',$aUserInfo['verified']);
 		
 			$this->user->setData("info.nickname",$aUserInfo['username']);
 			$this->user->setData("info.avatar",$aUserInfo['avatar']);
@@ -303,6 +304,7 @@ class PullComment extends Controller
 			$arrUserInfo = array(
 				'username' => $aComment->username() ,
 				'avatar' => $aComment->avatar() ,
+				'verified' => $aComment->verified() ,
 			);
 			$uid = $this->checkUid($arrUserInfo,$ostate['service']);
 			
