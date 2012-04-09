@@ -6,16 +6,6 @@ use org\jecat\framework\lang\aop\jointpoint\JointPointMethodDefine;
 class CommentListAspect
 {
 	/**
-	 * @pointcut
-	 */
-	public function pointcutCreateBeanConfig()
-	{
-		return array(
-			new JointPointMethodDefine('org\\opencomb\\comment\\CommentList','createBeanConfig') ,
-		) ;
-	}
-	
-	/**
 	 * @advice around
 	 * @for pointcutCreateBeanConfig
 	 */
