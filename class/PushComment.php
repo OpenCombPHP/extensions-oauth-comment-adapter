@@ -98,19 +98,12 @@ class PushComment extends Controller
     		//state的作者信息,包括在本站的和在对方网站上的,目前只有renren需要
     		$auther = null ;
     		if($ostate['service'] == 'renren.com'){
-    			$aWhere = clone $this->stateauther->prototype()->criteria()->where();
-    			$aWhere->eq('uid',$this->state['uid']);
-    			$aWhere->eq('service',$ostate['service']);
-    			$this->stateauther->load($aWhere);
+    			$this->stateauther->loadSql('uid = @1 and service = @2' , $this->state['uid'] ,$ostate['service'] );
     			$auther = $this->stateauther;
     		}
     		
     		//取一个用户的认证来拉取评论,挑最早用过的,避免超对方网站限制
-    		$auserModelWhere = clone $this->auser->prototype()->criteria()->where();
-    		$auserModelWhere->eq('service',$ostate['service']);
-    		$auserModelWhere->eq('valid',1);
-    		$auserModelWhere->ne('token','');
-    		if(!$this->auser->load($auserModelWhere)){
+    		if(!$this->auser->loadSql('service = @1 and valid = @2 and token <> @3' ,$ostate['service'] , 1 ,'' )){
     			continue;
     		}
 			try{
@@ -145,11 +138,8 @@ class PushComment extends Controller
 	    }
 	    
 	    $aId = IdManager::singleton()->currentId() ;
-	    $auserModelInfo = clone $this->auser->prototype()->criteria()->where();
 	    $this->auser->clearData();
-	    $auserModelInfo->eq('service',$service);
-	    $auserModelInfo->eq('suid',$aUserInfo['username']);
-	    $this->auser->load($auserModelInfo);
+	    $this->auser->loadSql('service = @1 and suid = @2' , $service , $aUserInfo['username']);
 	    
 	    if( $this->auser->isEmpty())
 	    {
