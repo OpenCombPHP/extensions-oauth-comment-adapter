@@ -1,6 +1,8 @@
 <?php
 namespace org\opencomb\oauthcommentadapter;
 
+use org\jecat\framework\db\sql\Insert;
+
 use org\jecat\framework\system\Application;
 use net\daichen\oauth\OAuthCommon;
 use net\daichen\oauth\Http;
@@ -12,7 +14,6 @@ use org\jecat\framework\db\DB;
 use org\jecat\framework\auth\IdManager;
 use org\jecat\framework\message\Message;
 use org\opencomb\coresystem\mvc\controller\Controller ;
-use org\jecat\framework\db\sql\StatementFactory;
 use org\jecat\framework\db\ExecuteException ;
 
 class PullComment extends Controller
@@ -299,7 +300,7 @@ class PullComment extends Controller
 			// save to db comment
 			$tid = $this->params->get('tid');
 			
-			$aInsert = StatementFactory::singleton() -> createInsert('comment_comment');
+			$aInsert = new Insert('comment_comment');
 			$aInsert->setData('tid',$tid);
 			$aInsert->setData('uid',$uid);
 			$aInsert->setData('type','userstate');
@@ -310,7 +311,7 @@ class PullComment extends Controller
 			$cid = DB::singleton()->lastInsertId();
 			
 			// save to db ocomment
-			$aInsert = StatementFactory::singleton() -> createInsert('oauthcommentadapter_ocomment');
+			$aInsert = new Insert('oauthcommentadapter_ocomment');
 			$aInsert->setData('cid',$cid);
 			$aInsert->setData('tcid',$aComment->tcid() );
 			$aInsert->setData('tuid',$aComment->tuid() );
