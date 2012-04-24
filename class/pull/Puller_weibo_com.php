@@ -25,7 +25,7 @@ class Puller_weibo_com extends AbstractPuller{
 		if(is_array($arr)){
 			$arrOlder = $arr ;
 		}else{
-			var_dump($arr);
+// 			var_dump($arr);
 			$arrOlder = array() ;
 		}
 		return $arrOlder ;

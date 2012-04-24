@@ -39,7 +39,7 @@ abstract class AbstractPuller implements IPuller{
 		$arr = json_decode($aRsT[$sService],true);
 		
 		if( !is_array($arr)){
-			var_dump($aRsT[$sService]);
+// 			var_dump($aRsT[$sService]);
 // 			var_dump($aRsT);
 		}
 		
