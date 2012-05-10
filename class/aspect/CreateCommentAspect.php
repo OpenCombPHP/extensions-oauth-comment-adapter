@@ -143,6 +143,12 @@ class CreateCommentAspect
 					}
 // 					$aRenrenUserModel->printStruct();
 					
+					/*
+					 * 
+					 * $this->modelComment['content']
+					 * 
+					 * */
+					
 					$arrOtherParams = array(
 							'status_id'=> $arrTid[$sSendTo] , 
 							'owner_id'=> $aRenrenUserModel['suid'] ,
