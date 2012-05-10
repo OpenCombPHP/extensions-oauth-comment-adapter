@@ -28,6 +28,31 @@
 				<label>人人状态<input name='sendto[]' type='checkbox' value='renren.com' checked/></label>
 			</if>
 			
+			<div class="facebox" style="display:none">
+			<ul>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:1:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/1.gif" /></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:2:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/2.gif"/></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:3:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/3.gif"/></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:4:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/4.gif"/></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:5:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/5.gif"/></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:6:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/6.gif"/></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:7:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/7.gif"/></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:8:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/8.gif"/></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:9:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/9.gif"/></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:10:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/10.gif"/></a></li>
+			<li><a href='javascript:;' onClick='addFace_comment("[em:11:]",this)'><img style="cursor:pointer; position:relative;" onclick="" src="extensions/oc-wonei-bridge/0.1/public/images/face/11.gif"/></a></li>
+			</ul>
+			</div>
+			<a href="javascript:;" id="publish_face" style="float:left" title="插入表情" onclick="">
+					<img align="absmiddle" class="checkFace" src="extensions/oc-wonei-bridge/0.1/public/images/face/facelist.gif" onClick="jQuery(this).parent().prev().toggle()"/>
+			</a>
+			<script type="text/javascript">
+			function addFace_comment(str,o){
+				jQuery(o).parent().parent().parent().toggle();
+				jQuery(o).parent().parent().parent().parent().parent().find("textarea").insertContent(str);
+			}
+			</script>
+
 			<input type='submit' value="发布" class="comment_submit" />
 		</div>
 	</form>
