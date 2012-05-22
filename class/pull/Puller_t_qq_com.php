@@ -13,7 +13,7 @@ class Puller_t_qq_com extends AbstractPuller{
 				throw new AuthAdapterException('拉取评论总数时发生错误：%s',$arr['msg']);
 			}
 			$id = $this->aOstate['sid'] ;
-			$this->iComments_count = (int)($arr['data'][$id]);
+			if(!empty($arr['data'][$id]))$this->iComments_count = (int)($arr['data'][$id]);
 		}
 		return $this->iComments_count ;
 	}
